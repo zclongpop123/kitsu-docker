@@ -1,0 +1,58 @@
+ersion: '3'
+
+services:
+    postgres14:
+        container_name: Postgres14
+
+        image: postgres:14
+        restart: unless-stopped
+
+        volumes:
+            - type: bind
+              source: /home/postgresql/data
+              target: /var/lib/postgresql/data
+
+        environment:
+            TZ: "Asia/Shanghai"
+            POSTGRES_PASSWORD: "mysecretpassword"
+
+        ports:
+            - '5432:5432'
+
+    redis7:
+        container_name: Redis7
+
+        image: redis:7
+        restart: unless-stopped
+
+        environment:
+            TZ: "Asia/Shanghai"
+
+        ports:
+          - '6379:6379'
+
+    kitsu:
+        container_name: Kitsu
+
+        image: kitsu
+        restart: unless-stopped
+
+        depends_on:
+            - postgres14
+            - redis7
+
+        environment:
+            TZ: "Asia/Shanghai"
+            KV_HOST: redis7
+            KV_PORT: 6379
+
+            DB_HOST: postgres14
+            DB_PORT: 5432
+            DB_USERNAME: postgres
+            DB_PASSWORD: "mysecretpassword"
+            DB_DATABASE: zoudb
+            DB_POOL_SIZE: 30
+            DB_MAX_OVERFLOW: 60
+
+        ports:
+          - '5000:5000'
