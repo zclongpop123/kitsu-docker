@@ -65,7 +65,8 @@ RUN mkdir /opt/zou/previews &&\
 
 RUN wget https://github.com/cgwire/kitsu/releases/download/v$KITSU_VERSION/kitsu-$KITSU_VERSION.tgz &&\
     mkdir -p /opt/kitsu/dist &&\
-    tar -xvf kitsu-$KITSU_VERSION.tgz -C /opt/kitsu/dist
+    tar -xvf kitsu-$KITSU_VERSION.tgz -C /opt/kitsu/dist &&\
+    rm -f kitsu-$KITSU_VERSION.tgz
 
 COPY gunicorn.conf /etc/zou/
 COPY gunicorn-events.conf /etc/zou/
