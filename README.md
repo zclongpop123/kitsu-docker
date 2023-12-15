@@ -1,4 +1,6 @@
-<img src="https://www.cg-wire.com/_nuxt/logo-kitsu.de716c4b.png" alt="image" width="150" height="auto">
+<p align="center">
+  <img src="https://www.cg-wire.com/_nuxt/logo-kitsu.de716c4b.png" alt="image" width="150" height="auto">
+</p>
 
 Better. Faster. Together.
 =
