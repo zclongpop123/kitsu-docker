@@ -14,10 +14,10 @@ RUN dnf -y update &&\
     dnf -y groupinstall "Development Tools" &&\
     dnf -y install wget gcc openssl-devel bzip2-devel libffi-devel xz-devel tk-devel
 	
-COPY ./Python-3.10.12.tgz  /root/
+#COPY ./Python-3.10.12.tgz  /root/
 
-    #wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz &&\
-RUN tar -xzf /root/Python-$PYTHON_VERSION.tgz &&\
+RUN wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz &&\
+    tar -xzf /root/Python-$PYTHON_VERSION.tgz &&\
     cd Python-$PYTHON_VERSION &&\
 
     ./configure --prefix=/usr/local/python/$PYTHON_VERSION/ &&\
@@ -62,12 +62,12 @@ RUN mkdir /opt/zou/previews &&\
     mkdir /opt/zou/logs &&\
     mkdir /etc/zou
 
-#RUN cd /opt/ &&\
-#    git clone -b build https://github.com/cgwire/kitsu &&\
-#    cd kitsu &&\
-#    git config --global --add safe.directory /opt/kitsu &&\
-#    git checkout build
-COPY kitsu /opt/kitsu
+RUN cd /opt/ &&\
+    git clone -b build https://github.com/cgwire/kitsu &&\
+    cd kitsu &&\
+    git config --global --add safe.directory /opt/kitsu &&\
+    git checkout build
+#COPY kitsu /opt/kitsu
 
 COPY gunicorn.conf /etc/zou/
 COPY gunicorn-events.conf /etc/zou/
