@@ -31,6 +31,20 @@ services:
         ports:
           - '6379:6379'
 
+    meilisearch:
+        container_name: Meilisearch
+        
+        image: getmeili/meilisearch
+        restart: unless-stopped
+        
+        environment:
+            TZ: "Asia/Shanghai"
+            MEILI_MASTER_KEY: masterkey
+        
+        ports:
+            - "7700:7700"
+
+
     kitsu:
         container_name: Kitsu
       
@@ -40,6 +54,7 @@ services:
         depends_on:
             - postgres14
             - redis7
+            - meilisearch
 
         environment:
             TZ: "Asia/Shanghai"
@@ -54,7 +69,12 @@ services:
             DB_POOL_SIZE: 30
             DB_MAX_OVERFLOW: 60
 
+            INDEXER_KEY: masterkey
+            INDEXER_HOST: meilisearch
+            INDEXER_POER: 7700
+
         ports:
           - '5000:5000'
           - '5001:5001'
           - '80:8080'
+
