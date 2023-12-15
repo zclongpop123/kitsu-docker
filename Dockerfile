@@ -28,7 +28,11 @@ RUN ln -s /usr/local/python/$PYTHON_VERSION/bin/python3.10 /usr/bin/python
 
 RUN python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple &&\
     python -m pip install --upgrade pip &&\
-    python -m pip install zou paste pastedeploy
+    python -m pip install \
+                  zou \
+                  paste \
+                  pastedeploy \
+		  supervisor
 
 
 FROM rockylinux:8
@@ -44,7 +48,10 @@ RUN sed -e 's|^mirrorlist=|#mirrorlist=|g' \
     -i.bak \
     /etc/yum.repos.d/[Rr]ocky*.repo
 
-RUN dnf install -y libGL
+RUN dnf install -y \
+        libGL \
+        nginx \
+        git
 
 RUN useradd --home /opt/zou zou &&\
     mkdir /opt/zou/backups &&\
@@ -55,8 +62,22 @@ RUN mkdir /opt/zou/previews &&\
     mkdir /opt/zou/logs &&\
     mkdir /etc/zou
 
-COPY gunicorn.ini /etc/zou/
+#RUN cd /opt/ &&\
+#    git clone -b build https://github.com/cgwire/kitsu &&\
+#    cd kitsu &&\
+#    git config --global --add safe.directory /opt/kitsu &&\
+#    git checkout build
+COPY kitsu /opt/kitsu
 
-WORKDIR /usr/local/python/$PYTHON_VERSION/bin
+COPY gunicorn.conf /etc/zou/
+COPY gunicorn-events.conf /etc/zou/
+COPY supervisord.conf /etc/zou/
+COPY kitsu-nginx.conf /etc/nginx/conf.d/
 
-EXPOSE 5000 5001
+ENV PATH="$PATH:/usr/local/python/$PYTHON_VERSION/bin"
+
+WORKDIR /root/
+
+EXPOSE 8080 5000 5001
+
+CMD ["supervisord", "-c", "/etc/zou/supervisord.conf"]
