@@ -25,3 +25,8 @@ GRANT ALL ON DATABASE kitsu_db TO kitsu_db_user;
 ```bash
 \password kitsu_db_user;
 ```
+
+- Initialize Database
+```bash
+zou init-db
+```
