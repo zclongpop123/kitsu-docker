@@ -6,6 +6,22 @@ Kitsu is a collaboration platform for Animation and VFX studios. It empowers you
 ---
 > https://www.cg-wire.com/kitsu
 
-- Postgres
-- Redis
-- Kitsu
+- Create Database
+```bash
+su - postgres
+```
+```bash
+psql
+```
+```sql
+CREATE DATABASE kitsu_db;
+```
+```sql
+CREATE ROLE kitsu_db_user;
+```
+```sql
+GRANT ALL ON DATABASE kitsu_db TO kitsu_db_user;
+```
+```bash
+\password kitsu_db_user;
+```
