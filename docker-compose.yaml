@@ -1,12 +1,12 @@
-ersion: '3'
+version: '3'
 
 services:
     postgres14:
         container_name: Postgres14
-
+        
         image: postgres:14
         restart: unless-stopped
-
+        
         volumes:
             - type: bind
               source: /home/postgresql/data
@@ -15,28 +15,28 @@ services:
         environment:
             TZ: "Asia/Shanghai"
             POSTGRES_PASSWORD: "mysecretpassword"
-
+        
         ports:
             - '5432:5432'
 
     redis7:
         container_name: Redis7
-
+        
         image: redis:7
         restart: unless-stopped
-
+        
         environment:
             TZ: "Asia/Shanghai"
-
+        
         ports:
           - '6379:6379'
 
     kitsu:
         container_name: Kitsu
-
+      
         image: kitsu
         restart: unless-stopped
-
+        
         depends_on:
             - postgres14
             - redis7
@@ -56,3 +56,5 @@ services:
 
         ports:
           - '5000:5000'
+          - '5001:5001'
+          - '80:8080'
