@@ -8,7 +8,12 @@ Kitsu is a collaboration platform for Animation and VFX studios. It empowers you
 ---
 > https://www.cg-wire.com/kitsu
 
-#### 1. Create Database
+#### 1. Build image
+```bash
+docker build -t kitsu .
+```
+
+#### 2. Create Database
 ```bash
 su - postgres
 ```
@@ -28,7 +33,7 @@ GRANT ALL ON DATABASE kitsu_db TO kitsu_db_user;
 \password kitsu_db_user;
 ```
 
-#### 2. Initialize Database
+#### 3. Initialize Database
 ```bash
 zou init-db
 ```
