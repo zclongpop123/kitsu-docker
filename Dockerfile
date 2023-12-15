@@ -38,6 +38,7 @@ RUN python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/
 FROM rockylinux:8
 
 ARG PYTHON_VERSION=3.10.12
+ARG KITSU_VERSION=0.17.52
 
 COPY --from=python_installer /usr/local/python /usr/local/python
 
@@ -62,12 +63,9 @@ RUN mkdir /opt/zou/previews &&\
     mkdir /opt/zou/logs &&\
     mkdir /etc/zou
 
-RUN cd /opt/ &&\
-    git clone -b build https://github.com/cgwire/kitsu &&\
-    cd kitsu &&\
-    git config --global --add safe.directory /opt/kitsu &&\
-    git checkout build
-#COPY kitsu /opt/kitsu
+RUN wget https://github.com/cgwire/kitsu/releases/download/v$KITSU_VERSION/kitsu-$KITSU_VERSION.tgz &&\
+    mkdir -p /opt/kitsu/dist &&\
+    tar -xvf kitsu-$KITSU_VERSION.tgz -C /opt/kitsu/dist
 
 COPY gunicorn.conf /etc/zou/
 COPY gunicorn-events.conf /etc/zou/
