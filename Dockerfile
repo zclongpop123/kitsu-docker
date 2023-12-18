@@ -50,6 +50,7 @@ RUN sed -e 's|^mirrorlist=|#mirrorlist=|g' \
     /etc/yum.repos.d/[Rr]ocky*.repo
 
 RUN dnf install -y \
+        wget \
         libGL \
         nginx \
         git
