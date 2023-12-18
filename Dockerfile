@@ -17,7 +17,7 @@ RUN dnf -y update &&\
 #COPY ./Python-3.10.12.tgz  /root/
 
 RUN wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz &&\
-    tar -xzf /root/Python-$PYTHON_VERSION.tgz &&\
+    tar -xzf Python-$PYTHON_VERSION.tgz &&\
     cd Python-$PYTHON_VERSION &&\
 
     ./configure --prefix=/usr/local/python/$PYTHON_VERSION/ &&\
