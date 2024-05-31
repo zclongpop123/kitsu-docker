@@ -38,7 +38,7 @@ RUN python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/
 FROM rockylinux:8
 
 ARG PYTHON_VERSION=3.10.12
-ARG KITSU_VERSION=0.17.52
+ARG KITSU_VERSION=0.19.36
 
 COPY --from=python_installer /usr/local/python /usr/local/python
 
